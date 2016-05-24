@@ -36,12 +36,16 @@ public class CipherAESManager implements CipherManager {
 
     private Cipher cipher;
     private byte[] cipherIV;
+    protected String blockMode;
+    protected String encryptionPadding;
     private String alias;
     private KeyStore keyStore;
 
     @TargetApi(Build.VERSION_CODES.M)
     public CipherAESManager(Builder builder) throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException, NoSuchProviderException, InvalidAlgorithmParameterException, NoSuchPaddingException {
         this.alias = builder.alias;
+        this.blockMode = builder.blockMode;
+        this.encryptionPadding = builder.encryptionPadding;
         initKeyStore();
         initCipher();
     }
@@ -55,7 +59,7 @@ public class CipherAESManager implements CipherManager {
 
     @Override
     public void initCipher() throws NoSuchPaddingException, NoSuchAlgorithmException {
-        cipher = Cipher.getInstance(KeyProperties.KEY_ALGORITHM_AES + "/" + KeyProperties.BLOCK_MODE_CBC + "/" + KeyProperties.ENCRYPTION_PADDING_PKCS7);
+        cipher = Cipher.getInstance(KeyProperties.KEY_ALGORITHM_AES + "/" + blockMode + "/" + encryptionPadding);
     }
 
     @Override
@@ -96,8 +100,8 @@ public class CipherAESManager implements CipherManager {
     public void createNewKey() throws NoSuchAlgorithmException, InvalidAlgorithmParameterException, NoSuchProviderException, KeyStoreException {
         KeyGenerator generator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore");
         generator.init(new KeyGenParameterSpec.Builder(alias, KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
-                .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
-                .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7)
+                .setBlockModes(blockMode)
+                .setEncryptionPaddings(encryptionPadding)
                 .build());
         generator.generateKey();
     }

@@ -72,11 +72,23 @@ public interface CipherManager {
     class Builder {
 
         protected CipherType type;
+        protected String blockMode;
+        protected String encryptionPadding;
         protected String alias;
         protected Context context;
 
         public Builder type(CipherType type) {
             this.type = type;
+            return this;
+        }
+
+        public Builder blockMode(String blockMode) {
+            this.blockMode = blockMode;
+            return this;
+        }
+
+        public Builder encryptionPadding(String encryptionPadding) {
+            this.encryptionPadding = encryptionPadding;
             return this;
         }
 
@@ -93,15 +105,28 @@ public interface CipherManager {
         public CipherManager build() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, NoSuchProviderException, InvalidAlgorithmParameterException, IOException, NoSuchPaddingException {
             if (alias == null || alias.length() == 0) {
                 throw new NullPointerException("Need \"alias\".");
-            } else if (type == null) {
+            }
+            if (type == null) {
                 throw new NullPointerException("Need \"type\".");
             } else if (type == CipherType.AES) {
+                if (blockMode == null) {
+                    blockMode = "CBC";
+                }
+                if (encryptionPadding == null) {
+                    encryptionPadding = "PKCS7Padding";
+                }
                 if (Build.VERSION_CODES.M <= Build.VERSION.SDK_INT) {
                     return new CipherAESManager(this);
                 } else {
                     throw new NoSuchAlgorithmException("AES is support only above API Lv23.");
                 }
             } else if (type == CipherType.RSA) {
+                if (blockMode == null) {
+                    blockMode = "ECB";
+                }
+                if (encryptionPadding == null) {
+                    encryptionPadding = "PKCS1Padding";
+                }
                 if (Build.VERSION_CODES.M <= Build.VERSION.SDK_INT) {
                     return new CipherRSAManagerM(this);
                 } else if (Build.VERSION_CODES.JELLY_BEAN_MR2 <= Build.VERSION.SDK_INT) {

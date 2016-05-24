@@ -52,8 +52,10 @@ public class MainActivity extends AppCompatActivity {
 
     private CipherManager getCipherManager() throws Exception {
         CipherManager.Builder builder = new CipherManager.Builder();
+        builder.type(CipherType.RSA);
+//        builder.blockMode("ECB") //If Needed.
+//        builder.encryptionPadding("PKCS1Padding"); //If Needed.
         builder.context(this); //Need Only RSA on below API Lv22.
-        builder.type(CipherType.AES);
         builder.alias(ALIAS);
         return builder.build();
     }

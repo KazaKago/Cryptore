@@ -36,12 +36,16 @@ public class CipherRSAManagerM implements CipherManager {
 
     private Cipher cipher;
     private byte[] cipherIV;
+    protected String blockMode;
+    protected String encryptionPadding;
     private String alias;
     private KeyStore keyStore;
 
     @TargetApi(Build.VERSION_CODES.M)
     public CipherRSAManagerM(Builder builder) throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException, NoSuchProviderException, InvalidAlgorithmParameterException, NoSuchPaddingException {
         this.alias = builder.alias;
+        this.blockMode = builder.blockMode;
+        this.encryptionPadding = builder.encryptionPadding;
         initKeyStore();
         initCipher();
     }
@@ -55,7 +59,7 @@ public class CipherRSAManagerM implements CipherManager {
 
     @Override
     public void initCipher() throws NoSuchPaddingException, NoSuchAlgorithmException, NoSuchProviderException {
-        cipher = Cipher.getInstance(KeyProperties.KEY_ALGORITHM_RSA + "/" + KeyProperties.BLOCK_MODE_ECB + "/" + KeyProperties.ENCRYPTION_PADDING_RSA_PKCS1);
+        cipher = Cipher.getInstance(KeyProperties.KEY_ALGORITHM_RSA + "/" + blockMode + "/" + encryptionPadding);
     }
 
     @Override
@@ -96,8 +100,8 @@ public class CipherRSAManagerM implements CipherManager {
     public void createNewKey() throws NoSuchAlgorithmException, InvalidAlgorithmParameterException, NoSuchProviderException, KeyStoreException {
         KeyPairGenerator generator = KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_RSA, "AndroidKeyStore");
         generator.initialize(new KeyGenParameterSpec.Builder(alias, KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
-                .setBlockModes(KeyProperties.BLOCK_MODE_ECB)
-                .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_RSA_PKCS1)
+                .setBlockModes(blockMode)
+                .setEncryptionPaddings(encryptionPadding)
                 .build());
         generator.generateKeyPair();
     }

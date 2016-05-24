@@ -40,6 +40,8 @@ public class CipherRSAManager implements CipherManager {
     private Context context;
     private Cipher cipher;
     private byte[] cipherIV;
+    protected String blockMode;
+    protected String encryptionPadding;
     private String alias;
     private KeyStore keyStore;
 
@@ -47,6 +49,8 @@ public class CipherRSAManager implements CipherManager {
     public CipherRSAManager(Builder builder) throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException, NoSuchProviderException, InvalidAlgorithmParameterException, NoSuchPaddingException {
         this.context = builder.context;
         this.alias = builder.alias;
+        this.blockMode = builder.blockMode;
+        this.encryptionPadding = builder.encryptionPadding;
         initKeyStore();
         initCipher();
     }
@@ -60,7 +64,7 @@ public class CipherRSAManager implements CipherManager {
 
     @Override
     public void initCipher() throws NoSuchPaddingException, NoSuchAlgorithmException, NoSuchProviderException {
-        cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding", "AndroidOpenSSL");
+        cipher = Cipher.getInstance("RSA/" + blockMode + "/" + encryptionPadding, "AndroidOpenSSL");
     }
 
     @Override
