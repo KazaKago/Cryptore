@@ -5,7 +5,7 @@ package com.ignis.ciphermanager;
  * <p/>
  * Created by tamura_k on 2016/05/17.
  */
-public enum CipherType {
+public enum CipherAlgorithm {
     AES,
     RSA,
 }

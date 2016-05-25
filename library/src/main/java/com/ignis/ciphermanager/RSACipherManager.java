@@ -35,7 +35,7 @@ import javax.security.auth.x500.X500Principal;
  * Created by tamura_k on 2016/04/22.
  */
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
-public class CipherRSAManager implements CipherManager {
+public class RSACipherManager implements CipherManager {
 
     private Context context;
     private Cipher cipher;
@@ -46,7 +46,7 @@ public class CipherRSAManager implements CipherManager {
     private KeyStore keyStore;
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
-    public CipherRSAManager(Builder builder) throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException, NoSuchProviderException, InvalidAlgorithmParameterException, NoSuchPaddingException {
+    public RSACipherManager(Builder builder) throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException, NoSuchProviderException, InvalidAlgorithmParameterException, NoSuchPaddingException {
         this.context = builder.context;
         this.alias = builder.alias;
         this.blockMode = builder.blockMode;

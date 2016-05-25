@@ -71,13 +71,18 @@ public interface CipherManager {
 
     class Builder {
 
-        protected CipherType type;
+        private static final String BLOCK_MODE_DEFAULT__AES = CipherProperties.BLOCK_MODE_CBC;
+        private static final String ENCRYPTION_PADDING_DEFAULT__AES = CipherProperties.ENCRYPTION_PADDING_PKCS7;
+        private static final String BLOCK_MODE_DEFAULT__RSA = CipherProperties.BLOCK_MODE_ECB;
+        private static final String ENCRYPTION_PADDING_DEFAULT__RSA = CipherProperties.ENCRYPTION_PADDING_RSA_PKCS1;
+
+        protected CipherAlgorithm type;
         protected String blockMode;
         protected String encryptionPadding;
         protected String alias;
         protected Context context;
 
-        public Builder type(CipherType type) {
+        public Builder type(CipherAlgorithm type) {
             this.type = type;
             return this;
         }
@@ -108,32 +113,32 @@ public interface CipherManager {
             }
             if (type == null) {
                 throw new NullPointerException("Need \"type\".");
-            } else if (type == CipherType.AES) {
+            } else if (type == CipherAlgorithm.AES) {
                 if (blockMode == null) {
-                    blockMode = "CBC";
+                    blockMode = BLOCK_MODE_DEFAULT__AES;
                 }
                 if (encryptionPadding == null) {
-                    encryptionPadding = "PKCS7Padding";
+                    encryptionPadding = ENCRYPTION_PADDING_DEFAULT__AES;
                 }
                 if (Build.VERSION_CODES.M <= Build.VERSION.SDK_INT) {
-                    return new CipherAESManager(this);
+                    return new AESCipherManager(this);
                 } else {
                     throw new NoSuchAlgorithmException("AES is support only above API Lv23.");
                 }
-            } else if (type == CipherType.RSA) {
+            } else if (type == CipherAlgorithm.RSA) {
                 if (blockMode == null) {
-                    blockMode = "ECB";
+                    blockMode = BLOCK_MODE_DEFAULT__RSA;
                 }
                 if (encryptionPadding == null) {
-                    encryptionPadding = "PKCS1Padding";
+                    encryptionPadding = ENCRYPTION_PADDING_DEFAULT__RSA;
                 }
                 if (Build.VERSION_CODES.M <= Build.VERSION.SDK_INT) {
-                    return new CipherRSAManagerM(this);
+                    return new RSACipherManagerM(this);
                 } else if (Build.VERSION_CODES.JELLY_BEAN_MR2 <= Build.VERSION.SDK_INT) {
                     if (context == null) {
                         throw new NullPointerException("Need \"Context\" for RSA on below API Lv22");
                     } else {
-                        return new CipherRSAManager(this);
+                        return new RSACipherManager(this);
                     }
                 } else {
                     throw new NoSuchAlgorithmException("RSA is support only above API Lv18.");

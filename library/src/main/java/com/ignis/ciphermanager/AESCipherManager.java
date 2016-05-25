@@ -11,28 +11,28 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
-import java.security.KeyPairGenerator;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.security.PrivateKey;
-import java.security.PublicKey;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
 import javax.crypto.CipherOutputStream;
+import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
 
 /**
- * RSA CipherManager for above Android M.
+ * AES CipherManager.
  * <p/>
  * Created by tamura_k on 2016/04/22.
  */
 @TargetApi(Build.VERSION_CODES.M)
-public class CipherRSAManagerM implements CipherManager {
+public class AESCipherManager implements CipherManager {
 
     private Cipher cipher;
     private byte[] cipherIV;
@@ -42,7 +42,7 @@ public class CipherRSAManagerM implements CipherManager {
     private KeyStore keyStore;
 
     @TargetApi(Build.VERSION_CODES.M)
-    public CipherRSAManagerM(Builder builder) throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException, NoSuchProviderException, InvalidAlgorithmParameterException, NoSuchPaddingException {
+    public AESCipherManager(Builder builder) throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException, NoSuchProviderException, InvalidAlgorithmParameterException, NoSuchPaddingException {
         this.alias = builder.alias;
         this.blockMode = builder.blockMode;
         this.encryptionPadding = builder.encryptionPadding;
@@ -58,15 +58,15 @@ public class CipherRSAManagerM implements CipherManager {
     }
 
     @Override
-    public void initCipher() throws NoSuchPaddingException, NoSuchAlgorithmException, NoSuchProviderException {
-        cipher = Cipher.getInstance(KeyProperties.KEY_ALGORITHM_RSA + "/" + blockMode + "/" + encryptionPadding);
+    public void initCipher() throws NoSuchPaddingException, NoSuchAlgorithmException {
+        cipher = Cipher.getInstance(KeyProperties.KEY_ALGORITHM_AES + "/" + blockMode + "/" + encryptionPadding);
     }
 
     @Override
-    public String encryptString(String plainText) throws KeyStoreException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IOException, NoSuchProviderException, InvalidAlgorithmParameterException {
-        PublicKey publicKey = keyStore.getCertificate(alias).getPublicKey();
+    public String encryptString(String plainText) throws UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException, InvalidKeyException, IOException {
+        SecretKey secretKey = (SecretKey) keyStore.getKey(alias, null);
 
-        cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey);
         cipherIV = cipher.getIV();
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -79,10 +79,10 @@ public class CipherRSAManagerM implements CipherManager {
     }
 
     @Override
-    public String decryptString(String encryptedText) throws KeyStoreException, NoSuchProviderException, NoSuchAlgorithmException, UnrecoverableKeyException, NoSuchPaddingException, InvalidKeyException, IOException, InvalidAlgorithmParameterException {
-        PrivateKey privateKey = (PrivateKey) keyStore.getKey(alias, null);
+    public String decryptString(String encryptedText) throws UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException, InvalidAlgorithmParameterException, InvalidKeyException, IOException {
+        SecretKey secretKey = (SecretKey) keyStore.getKey(alias, null);
 
-        cipher.init(Cipher.DECRYPT_MODE, privateKey);
+        cipher.init(Cipher.DECRYPT_MODE, secretKey, new IvParameterSpec(cipherIV));
         cipherIV = cipher.getIV();
 
         CipherInputStream cipherInputStream = new CipherInputStream(new ByteArrayInputStream(Base64.decode(encryptedText, Base64.DEFAULT)), cipher);
@@ -98,12 +98,12 @@ public class CipherRSAManagerM implements CipherManager {
 
     @Override
     public void createNewKey() throws NoSuchAlgorithmException, InvalidAlgorithmParameterException, NoSuchProviderException, KeyStoreException {
-        KeyPairGenerator generator = KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_RSA, "AndroidKeyStore");
-        generator.initialize(new KeyGenParameterSpec.Builder(alias, KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
+        KeyGenerator generator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore");
+        generator.init(new KeyGenParameterSpec.Builder(alias, KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
                 .setBlockModes(blockMode)
                 .setEncryptionPaddings(encryptionPadding)
                 .build());
-        generator.generateKeyPair();
+        generator.generateKey();
     }
 
     @Override
