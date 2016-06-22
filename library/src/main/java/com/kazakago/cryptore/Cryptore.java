@@ -1,4 +1,4 @@
-package com.ignis.ciphermanager;
+package com.kazakago.cryptore;
 
 import android.content.Context;
 import android.os.Build;
@@ -15,11 +15,11 @@ import java.security.cert.CertificateException;
 import javax.crypto.NoSuchPaddingException;
 
 /**
- * CipherManager Interface.
+ * Cryptore Interface.
  * <p/>
  * Created by tamura_k on 2016/05/09.
  */
-public interface CipherManager {
+public interface Cryptore {
 
     /**
      * Initialize KeyStore.
@@ -107,7 +107,7 @@ public interface CipherManager {
             return this;
         }
 
-        public CipherManager build() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, NoSuchProviderException, InvalidAlgorithmParameterException, IOException, NoSuchPaddingException {
+        public Cryptore build() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, NoSuchProviderException, InvalidAlgorithmParameterException, IOException, NoSuchPaddingException {
             if (alias == null || alias.length() == 0) {
                 throw new NullPointerException("Need \"alias\".");
             }
@@ -121,7 +121,7 @@ public interface CipherManager {
                     encryptionPadding = ENCRYPTION_PADDING_DEFAULT__AES;
                 }
                 if (Build.VERSION_CODES.M <= Build.VERSION.SDK_INT) {
-                    return new AESCipherManager(this);
+                    return new AESCryptore(this);
                 } else {
                     throw new NoSuchAlgorithmException("AES is support only above API Lv23.");
                 }
@@ -133,12 +133,12 @@ public interface CipherManager {
                     encryptionPadding = ENCRYPTION_PADDING_DEFAULT__RSA;
                 }
                 if (Build.VERSION_CODES.M <= Build.VERSION.SDK_INT) {
-                    return new RSACipherManagerM(this);
+                    return new RSACryptoreM(this);
                 } else if (Build.VERSION_CODES.JELLY_BEAN_MR2 <= Build.VERSION.SDK_INT) {
                     if (context == null) {
                         throw new NullPointerException("Need \"Context\" for RSA on below API Lv22");
                     } else {
-                        return new RSACipherManager(this);
+                        return new RSACryptore(this);
                     }
                 } else {
                     throw new NoSuchAlgorithmException("RSA is support only above API Lv18.");

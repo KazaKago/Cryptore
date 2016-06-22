@@ -1,4 +1,4 @@
-package com.ignis.ciphermanager;
+package com.kazakago.cryptore;
 
 /**
  * Cipher Property, copied from Android Framework API Level 23.

@@ -1,4 +1,4 @@
-package com.ignis.ciphermanager;
+package com.kazakago.cryptore;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -30,12 +30,12 @@ import javax.crypto.NoSuchPaddingException;
 import javax.security.auth.x500.X500Principal;
 
 /**
- * RSA CipherManager.
+ * RSA Cryptore.
  * <p/>
  * Created by tamura_k on 2016/04/22.
  */
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
-public class RSACipherManager implements CipherManager {
+public class RSACryptore implements Cryptore {
 
     private Context context;
     private Cipher cipher;
@@ -46,7 +46,7 @@ public class RSACipherManager implements CipherManager {
     private KeyStore keyStore;
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
-    public RSACipherManager(Builder builder) throws CertificateException, NoSuchAlgorithmException, KeyStoreException, NoSuchProviderException, InvalidAlgorithmParameterException, IOException, NoSuchPaddingException {
+    public RSACryptore(Builder builder) throws CertificateException, NoSuchAlgorithmException, KeyStoreException, NoSuchProviderException, InvalidAlgorithmParameterException, IOException, NoSuchPaddingException {
         this.context = builder.context;
         this.alias = builder.alias;
         this.blockMode = builder.blockMode;

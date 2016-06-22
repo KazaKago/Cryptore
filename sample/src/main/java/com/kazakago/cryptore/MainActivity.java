@@ -1,4 +1,4 @@
-package com.ignis.cipherapp;
+package com.kazakago.cryptore;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,10 +9,6 @@ import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
-import com.ignis.ciphermanager.AESCipherManager;
-import com.ignis.ciphermanager.CipherAlgorithm;
-import com.ignis.ciphermanager.CipherManager;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private CipherManager getCipherManager() throws Exception {
-        CipherManager.Builder builder = new CipherManager.Builder();
+    private Cryptore getCipherManager() throws Exception {
+        Cryptore.Builder builder = new Cryptore.Builder();
         builder.type(CipherAlgorithm.RSA);
 //        builder.blockMode(CipherProperties.BLOCK_MODE_ECB); //If Needed.
 //        builder.encryptionPadding(CipherProperties.ENCRYPTION_PADDING_RSA_PKCS1); //If Needed.
@@ -63,9 +59,9 @@ public class MainActivity extends AppCompatActivity {
     private String encrypt(String originalStr) {
         String encryptedStr = null;
         try {
-            CipherManager cipherManager = getCipherManager();
-            encryptedStr = cipherManager.encryptString(originalStr);
-            if (cipherManager instanceof AESCipherManager) saveCipherIV(cipherManager.getCipherIV()); //Need Only AES.
+            Cryptore cryptore = getCipherManager();
+            encryptedStr = cryptore.encryptString(originalStr);
+            if (cryptore instanceof AESCryptore) saveCipherIV(cryptore.getCipherIV()); //Need Only AES.
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
@@ -76,9 +72,9 @@ public class MainActivity extends AppCompatActivity {
     private String decrypt(String encryptedStr) {
         String decryptedStr = null;
         try {
-            CipherManager cipherManager = getCipherManager();
-            if (cipherManager instanceof AESCipherManager) cipherManager.setCipherIV(restoreCipherIV()); //Need Only AES.
-            decryptedStr = cipherManager.decryptString(encryptedStr);
+            Cryptore cryptore = getCipherManager();
+            if (cryptore instanceof AESCryptore) cryptore.setCipherIV(restoreCipherIV()); //Need Only AES.
+            decryptedStr = cryptore.decryptString(encryptedStr);
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();

@@ -1,4 +1,4 @@
-package com.ignis.ciphermanager;
+package com.kazakago.cryptore;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

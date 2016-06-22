@@ -1,4 +1,4 @@
-package com.ignis.cipherapp;
+package com.kazakago.cryptore;
 
 import org.junit.Test;
 
