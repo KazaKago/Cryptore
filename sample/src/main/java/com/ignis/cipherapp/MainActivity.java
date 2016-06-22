@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
             if (cipherManager instanceof AESCipherManager) saveCipherIV(cipherManager.getCipherIV()); //Need Only AES.
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(MainActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
         }
         return encryptedStr;
     }
@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             decryptedStr = cipherManager.decryptString(encryptedStr);
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(MainActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
         }
         return decryptedStr;
     }

@@ -42,7 +42,7 @@ public class AESCipherManager implements CipherManager {
     private KeyStore keyStore;
 
     @TargetApi(Build.VERSION_CODES.M)
-    public AESCipherManager(Builder builder) throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException, NoSuchProviderException, InvalidAlgorithmParameterException, NoSuchPaddingException {
+    public AESCipherManager(Builder builder) throws CertificateException, NoSuchAlgorithmException, KeyStoreException, NoSuchProviderException, InvalidAlgorithmParameterException, IOException, NoSuchPaddingException {
         this.alias = builder.alias;
         this.blockMode = builder.blockMode;
         this.encryptionPadding = builder.encryptionPadding;
@@ -97,7 +97,7 @@ public class AESCipherManager implements CipherManager {
     }
 
     @Override
-    public void createNewKey() throws NoSuchAlgorithmException, InvalidAlgorithmParameterException, NoSuchProviderException, KeyStoreException {
+    public void createNewKey() throws NoSuchProviderException, NoSuchAlgorithmException, InvalidAlgorithmParameterException {
         KeyGenerator generator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore");
         generator.init(new KeyGenParameterSpec.Builder(alias, KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
                 .setBlockModes(blockMode)

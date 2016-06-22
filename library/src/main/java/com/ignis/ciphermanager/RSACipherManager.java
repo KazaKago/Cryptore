@@ -46,7 +46,7 @@ public class RSACipherManager implements CipherManager {
     private KeyStore keyStore;
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
-    public RSACipherManager(Builder builder) throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException, NoSuchProviderException, InvalidAlgorithmParameterException, NoSuchPaddingException {
+    public RSACipherManager(Builder builder) throws CertificateException, NoSuchAlgorithmException, KeyStoreException, NoSuchProviderException, InvalidAlgorithmParameterException, IOException, NoSuchPaddingException {
         this.context = builder.context;
         this.alias = builder.alias;
         this.blockMode = builder.blockMode;
@@ -63,12 +63,12 @@ public class RSACipherManager implements CipherManager {
     }
 
     @Override
-    public void initCipher() throws NoSuchPaddingException, NoSuchAlgorithmException, NoSuchProviderException {
-        cipher = Cipher.getInstance("RSA/" + blockMode + "/" + encryptionPadding, "AndroidOpenSSL");
+    public void initCipher() throws NoSuchPaddingException, NoSuchAlgorithmException {
+        cipher = Cipher.getInstance("RSA/" + blockMode + "/" + encryptionPadding);
     }
 
     @Override
-    public String encryptString(String plainText) throws KeyStoreException, NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IOException, NoSuchProviderException, InvalidAlgorithmParameterException {
+    public String encryptString(String plainText) throws KeyStoreException, InvalidKeyException, IOException {
         PublicKey publicKey = keyStore.getCertificate(alias).getPublicKey();
 
         cipher.init(Cipher.ENCRYPT_MODE, publicKey);
@@ -84,7 +84,7 @@ public class RSACipherManager implements CipherManager {
     }
 
     @Override
-    public String decryptString(String encryptedText) throws KeyStoreException, NoSuchProviderException, NoSuchAlgorithmException, UnrecoverableKeyException, NoSuchPaddingException, InvalidKeyException, IOException, InvalidAlgorithmParameterException {
+    public String decryptString(String encryptedText) throws UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException, InvalidKeyException, IOException {
         PrivateKey privateKey = (PrivateKey) keyStore.getKey(alias, null);
 
         cipher.init(Cipher.DECRYPT_MODE, privateKey);
@@ -102,7 +102,7 @@ public class RSACipherManager implements CipherManager {
     }
 
     @Override
-    public void createNewKey() throws NoSuchAlgorithmException, InvalidAlgorithmParameterException, NoSuchProviderException, KeyStoreException {
+    public void createNewKey() throws NoSuchProviderException, NoSuchAlgorithmException, InvalidAlgorithmParameterException {
         Calendar start = Calendar.getInstance();
         Calendar end = Calendar.getInstance();
         end.add(Calendar.YEAR, 100);
