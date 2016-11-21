@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private Cryptore getCipherManager() throws Exception {
+    private Cryptore getCryptore() throws Exception {
         Cryptore.Builder builder = new Cryptore.Builder();
         builder.type(CipherAlgorithm.RSA);
 //        builder.blockMode(CipherProperties.BLOCK_MODE_ECB); //If Needed.
@@ -59,9 +59,11 @@ public class MainActivity extends AppCompatActivity {
     private String encrypt(String originalStr) {
         String encryptedStr = null;
         try {
-            Cryptore cryptore = getCipherManager();
+            Cryptore cryptore = getCryptore();
             encryptedStr = cryptore.encryptString(originalStr);
-            if (cryptore instanceof AESCryptore) saveCipherIV(cryptore.getCipherIV()); //Need Only AES.
+            if (cryptore instanceof AESCryptore) {
+                saveCipherIV(cryptore.getCipherIV()); //Need Only AES.
+            }
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
@@ -72,8 +74,10 @@ public class MainActivity extends AppCompatActivity {
     private String decrypt(String encryptedStr) {
         String decryptedStr = null;
         try {
-            Cryptore cryptore = getCipherManager();
-            if (cryptore instanceof AESCryptore) cryptore.setCipherIV(restoreCipherIV()); //Need Only AES.
+            Cryptore cryptore = getCryptore();
+            if (cryptore instanceof AESCryptore) {
+                cryptore.setCipherIV(restoreCipherIV()); //Need Only AES.
+            }
             decryptedStr = cryptore.decryptString(encryptedStr);
         } catch (Exception e) {
             e.printStackTrace();
