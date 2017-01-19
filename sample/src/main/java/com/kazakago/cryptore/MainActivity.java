@@ -47,20 +47,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Cryptore getCryptore() throws Exception {
-        Cryptore.Builder builder = new Cryptore.Builder();
-        builder.type(CipherAlgorithm.RSA);
+        Cryptore.Builder builder = new Cryptore.Builder(ALIAS, CipherAlgorithm.RSA);
+        builder.context(this); //Need Only RSA on below API Lv22.
 //        builder.blockMode(CipherProperties.BLOCK_MODE_ECB); //If Needed.
 //        builder.encryptionPadding(CipherProperties.ENCRYPTION_PADDING_RSA_PKCS1); //If Needed.
-        builder.context(this); //Need Only RSA on below API Lv22.
-        builder.alias(ALIAS);
         return builder.build();
     }
 
     private String encrypt(String originalStr) {
-        String encryptedStr = null;
+        byte[] encryptedByte = null;
         try {
             Cryptore cryptore = getCryptore();
-            encryptedStr = cryptore.encryptString(originalStr);
+            encryptedByte = cryptore.encrypt(Base64.decode(originalStr, Base64.DEFAULT));
             if (cryptore instanceof AESCryptore) {
                 saveCipherIV(cryptore.getCipherIV()); //Need Only AES.
             }
@@ -68,22 +66,22 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
         }
-        return encryptedStr;
+        return Base64.encodeToString(encryptedByte, Base64.DEFAULT);
     }
 
     private String decrypt(String encryptedStr) {
-        String decryptedStr = null;
+        byte[] decryptedByte = null;
         try {
             Cryptore cryptore = getCryptore();
             if (cryptore instanceof AESCryptore) {
-                cryptore.setCipherIV(restoreCipherIV()); //Need Only AES.
+                cryptore.setCipherIV(loadCipherIV()); //Need Only AES.
             }
-            decryptedStr = cryptore.decryptString(encryptedStr);
+            decryptedByte = cryptore.decrypt(Base64.decode(encryptedStr, Base64.DEFAULT));
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
         }
-        return decryptedStr;
+        return Base64.encodeToString(decryptedByte, Base64.DEFAULT);
     }
 
     private void saveCipherIV(byte[] cipherIV) {
@@ -93,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    private byte[] restoreCipherIV() {
+    private byte[] loadCipherIV() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String cipherIVStr = preferences.getString("cipher_iv", null);
         return (cipherIVStr != null) ? Base64.decode(cipherIVStr, Base64.DEFAULT) : null;

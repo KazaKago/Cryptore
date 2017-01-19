@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
-import android.util.Base64;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -63,7 +62,7 @@ public class AESCryptore implements Cryptore {
     }
 
     @Override
-    public String encryptString(String plainText) throws UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException, InvalidKeyException, IOException {
+    public byte[] encrypt(byte[] plainByte) throws UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException, InvalidKeyException, IOException {
         SecretKey secretKey = (SecretKey) keyStore.getKey(alias, null);
 
         cipher.init(Cipher.ENCRYPT_MODE, secretKey);
@@ -71,29 +70,28 @@ public class AESCryptore implements Cryptore {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         CipherOutputStream cipherOutputStream = new CipherOutputStream(outputStream, cipher);
-        cipherOutputStream.write(plainText.getBytes("UTF-8"));
+        cipherOutputStream.write(plainByte);
         cipherOutputStream.close();
 
-        byte[] bytes = outputStream.toByteArray();
-        return Base64.encodeToString(bytes, Base64.DEFAULT);
+        return outputStream.toByteArray();
     }
 
     @Override
-    public String decryptString(String encryptedText) throws UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException, InvalidAlgorithmParameterException, InvalidKeyException, IOException {
+    public byte[] decrypt(byte[] encryptedByte) throws UnrecoverableKeyException, NoSuchAlgorithmException, KeyStoreException, InvalidAlgorithmParameterException, InvalidKeyException, IOException {
         SecretKey secretKey = (SecretKey) keyStore.getKey(alias, null);
 
         cipher.init(Cipher.DECRYPT_MODE, secretKey, new IvParameterSpec(cipherIV));
         cipherIV = cipher.getIV();
 
-        CipherInputStream cipherInputStream = new CipherInputStream(new ByteArrayInputStream(Base64.decode(encryptedText, Base64.DEFAULT)), cipher);
-
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        CipherInputStream cipherInputStream = new CipherInputStream(new ByteArrayInputStream(encryptedByte), cipher);
         int b;
         while ((b = cipherInputStream.read()) != -1) {
             outputStream.write(b);
         }
         outputStream.close();
-        return outputStream.toString("UTF-8");
+
+        return outputStream.toByteArray();
     }
 
     @Override
