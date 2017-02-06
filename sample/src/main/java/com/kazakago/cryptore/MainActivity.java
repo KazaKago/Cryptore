@@ -12,7 +12,8 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String ALIAS = "CIPHER";
+    private static final String ALIAS_RSA = "CIPHER_RSA";
+    private static final String ALIAS_AES = "CIPHER_AES";
 
     private TextInputLayout originalInput;
     private TextInputLayout encryptedInput;
@@ -27,61 +28,105 @@ public class MainActivity extends AppCompatActivity {
         encryptedInput = (TextInputLayout) findViewById(R.id.input_encrypted);
         decryptedInput = (TextInputLayout) findViewById(R.id.input_decrypted);
 
-        Button encryptButton = (Button) findViewById(R.id.button_encrypt);
-        encryptButton.setOnClickListener(new View.OnClickListener() {
+        Button encryptRSAButton = (Button) findViewById(R.id.button_encrypt_rsa);
+        encryptRSAButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String encryptedStr = encrypt(originalInput.getEditText().getText().toString());
+                String encryptedStr = encryptRSA(originalInput.getEditText().getText().toString());
                 encryptedInput.getEditText().setText(encryptedStr);
             }
         });
 
-        Button decryptButton = (Button) findViewById(R.id.button_decrypt);
-        decryptButton.setOnClickListener(new View.OnClickListener() {
+        Button encryptAESButton = (Button) findViewById(R.id.button_encrypt_aes);
+        encryptAESButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String decryptedStr = decrypt(encryptedInput.getEditText().getText().toString());
+                String encryptedStr = encryptAES(originalInput.getEditText().getText().toString());
+                encryptedInput.getEditText().setText(encryptedStr);
+            }
+        });
+
+        Button decryptRSAButton = (Button) findViewById(R.id.button_decrypt_rsa);
+        decryptRSAButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String decryptedStr = decryptRSA(encryptedInput.getEditText().getText().toString());
+                decryptedInput.getEditText().setText(decryptedStr);
+            }
+        });
+
+        Button decryptAESButton = (Button) findViewById(R.id.button_decrypt_aes);
+        decryptAESButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String decryptedStr = decryptAES(encryptedInput.getEditText().getText().toString());
                 decryptedInput.getEditText().setText(decryptedStr);
             }
         });
     }
 
-    private Cryptore getCryptore() throws Exception {
-        Cryptore.Builder builder = new Cryptore.Builder(ALIAS, CipherAlgorithm.RSA);
-        builder.context(this); //Need Only RSA on below API Lv22.
-//        builder.blockMode(CipherProperties.BLOCK_MODE_ECB); //If Needed.
-//        builder.encryptionPadding(CipherProperties.ENCRYPTION_PADDING_RSA_PKCS1); //If Needed.
+    private Cryptore getCryptoreRSA() throws Exception {
+        Cryptore.Builder builder = new Cryptore.Builder(ALIAS_RSA, CipherAlgorithm.RSA);
+        builder.setContext(this); //Need Only RSA on below API Lv22.
+//        builder.setBlockMode(BlockMode.ECB); //If Needed.
+//        builder.setEncryptionPadding(EncryptionPadding.RSA_PKCS1); //If Needed.
         return builder.build();
     }
 
-    private String encrypt(String originalStr) {
-        byte[] encryptedByte = null;
-        try {
-            Cryptore cryptore = getCryptore();
-            encryptedByte = cryptore.encrypt(Base64.decode(originalStr, Base64.DEFAULT));
-            if (cryptore instanceof AESCryptore) {
-                saveCipherIV(cryptore.getCipherIV()); //Need Only AES.
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-        }
-        return Base64.encodeToString(encryptedByte, Base64.DEFAULT);
+    private Cryptore getCryptoreAES() throws Exception {
+        Cryptore.Builder builder = new Cryptore.Builder(ALIAS_AES, CipherAlgorithm.AES);
+//        builder.setBlockMode(BlockMode.CBC); //If Needed.
+//        builder.setEncryptionPadding(EncryptionPadding.PKCS7); //If Needed.
+        return builder.build();
     }
 
-    private String decrypt(String encryptedStr) {
-        byte[] decryptedByte = null;
+    private String encryptRSA(String originalStr) {
         try {
-            Cryptore cryptore = getCryptore();
-            if (cryptore instanceof AESCryptore) {
-                cryptore.setCipherIV(loadCipherIV()); //Need Only AES.
-            }
-            decryptedByte = cryptore.decrypt(Base64.decode(encryptedStr, Base64.DEFAULT));
+            Cryptore cryptore = getCryptoreRSA();
+            EncryptResult result = cryptore.encrypt(Base64.decode(originalStr, Base64.DEFAULT));
+            return Base64.encodeToString(result.getBytes(), Base64.DEFAULT);
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
         }
-        return Base64.encodeToString(decryptedByte, Base64.DEFAULT);
+        return "";
+    }
+
+    private String decryptRSA(String encryptedStr) {
+        try {
+            Cryptore cryptore = getCryptoreRSA();
+            DecryptResult result = cryptore.decrypt(Base64.decode(encryptedStr, Base64.DEFAULT));
+            return Base64.encodeToString(result.getBytes(), Base64.DEFAULT);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+        }
+        return "";
+    }
+
+    private String encryptAES(String originalStr) {
+        try {
+            Cryptore cryptore = getCryptoreRSA();
+            EncryptResult result = cryptore.encrypt(Base64.decode(originalStr, Base64.DEFAULT));
+            saveCipherIV(result.getCipherIV());
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+        }
+        return "";
+    }
+
+    private String decryptAES(String encryptedStr) {
+        try {
+            Cryptore cryptore = getCryptoreRSA();
+            byte[] cipherIV = loadCipherIV();
+            DecryptResult result = cryptore.decrypt(Base64.decode(encryptedStr, Base64.DEFAULT), cipherIV);
+            return Base64.encodeToString(result.getBytes(), Base64.DEFAULT);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+        }
+        return "";
     }
 
     private void saveCipherIV(byte[] cipherIV) {
