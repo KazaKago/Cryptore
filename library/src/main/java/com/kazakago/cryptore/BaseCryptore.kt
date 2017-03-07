@@ -35,11 +35,6 @@ abstract class BaseCryptore(
     }
 
     @Throws(UnrecoverableKeyException::class, NoSuchAlgorithmException::class, KeyStoreException::class, InvalidAlgorithmParameterException::class, InvalidKeyException::class, IOException::class)
-    override fun decrypt(encryptedByte: ByteArray): DecryptResult {
-        return decrypt(encryptedByte, null)
-    }
-
-    @Throws(UnrecoverableKeyException::class, NoSuchAlgorithmException::class, KeyStoreException::class, InvalidAlgorithmParameterException::class, InvalidKeyException::class, IOException::class)
     override fun decrypt(encryptedByte: ByteArray, cipherIV: ByteArray?): DecryptResult {
         val decryptKey = getDecryptKey(keyStore = keyStore, alias = alias)
         cipherIV?.let {
@@ -54,31 +49,31 @@ abstract class BaseCryptore(
      * Initialize KeyStore.
      */
     @Throws(KeyStoreException::class, CertificateException::class, NoSuchAlgorithmException::class, IOException::class, NoSuchProviderException::class, InvalidAlgorithmParameterException::class)
-    abstract fun createKeyStore(): KeyStore
+    protected abstract fun createKeyStore(): KeyStore
 
     /**
      * Initialize Cipher.
      */
     @Throws(NoSuchPaddingException::class, NoSuchAlgorithmException::class)
-    abstract fun createCipher(blockMode: BlockMode, encryptionPadding: EncryptionPadding): Cipher
+    protected abstract fun createCipher(blockMode: BlockMode, encryptionPadding: EncryptionPadding): Cipher
 
     /**
      * Get Encryption Key.
      */
     @Throws(UnrecoverableKeyException::class, NoSuchAlgorithmException::class, KeyStoreException::class, InvalidKeyException::class, IOException::class)
-    abstract fun getEncryptKey(keyStore: KeyStore, alias: String): Key
+    protected abstract fun getEncryptKey(keyStore: KeyStore, alias: String): Key
 
     /**
      * Get Decryption Key.
      */
     @Throws(UnrecoverableKeyException::class, NoSuchAlgorithmException::class, KeyStoreException::class, InvalidAlgorithmParameterException::class, InvalidKeyException::class, IOException::class)
-    abstract fun getDecryptKey(keyStore: KeyStore, alias: String): Key
+    protected abstract fun getDecryptKey(keyStore: KeyStore, alias: String): Key
 
     /**
      * Create new key pair.
      * Create RSA/AES key pair for encryption/decryption using RSA/AES OAEP.
      */
     @Throws(NoSuchAlgorithmException::class, InvalidAlgorithmParameterException::class, NoSuchProviderException::class, KeyStoreException::class)
-    abstract fun createNewKey(alias: String, blockMode: BlockMode, encryptionPadding: EncryptionPadding)
+    protected abstract fun createNewKey(alias: String, blockMode: BlockMode, encryptionPadding: EncryptionPadding)
 
 }

@@ -95,7 +95,7 @@ public class MainActivityJava extends AppCompatActivity {
     private String decryptRSA(String encryptedStr) {
         try {
             byte[] encryptedByte = Base64.decode(encryptedStr, Base64.DEFAULT);
-            DecryptResult result = getCryptoreRSA().decrypt(encryptedByte);
+            DecryptResult result = getCryptoreRSA().decrypt(encryptedByte, null);
             return new String(result.getBytes());
         } catch (Exception e) {
             e.printStackTrace();

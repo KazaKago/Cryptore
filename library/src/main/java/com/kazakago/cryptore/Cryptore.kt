@@ -28,17 +28,7 @@ interface Cryptore {
     fun encrypt(plainByte: ByteArray): EncryptResult
 
     /**
-     * Decrypt byte.
-     *
-     * @param encryptedByte cipher byte
-     * *
-     * @return plain byte
-     */
-    @Throws(KeyStoreException::class, NoSuchProviderException::class, NoSuchAlgorithmException::class, UnrecoverableEntryException::class, NoSuchPaddingException::class, InvalidKeyException::class, IOException::class, InvalidAlgorithmParameterException::class)
-    fun decrypt(encryptedByte: ByteArray): DecryptResult
-
-    /**
-     * Decrypt byte with Cipher IV.
+     * Decrypt byte
      *
      * @param encryptedByte cipher byte
      * @param cipherIV cipher IV
@@ -46,7 +36,7 @@ interface Cryptore {
      * @return plain byte
      */
     @Throws(UnrecoverableKeyException::class, NoSuchAlgorithmException::class, KeyStoreException::class, InvalidAlgorithmParameterException::class, InvalidKeyException::class, IOException::class)
-    fun decrypt(encryptedByte: ByteArray, cipherIV: ByteArray?): DecryptResult
+    fun decrypt(encryptedByte: ByteArray, cipherIV: ByteArray? = null): DecryptResult
 
     class Builder(var alias: String,
                   var type: CipherAlgorithm = Cryptore.Builder.CIPHER_ALGORITHM_DEFAULT) {
