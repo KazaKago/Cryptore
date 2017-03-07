@@ -20,7 +20,7 @@ This is due to Android OS hardware restrictions. [More details.](https://develop
 
 Add the following gradle dependency exchanging x.x.x for the latest release.
 
-```
+```groovy
 compile 'com.kazakago:cryptore:x.x.x'
 ```
 
@@ -30,7 +30,7 @@ The following is a sample to encrypt and decrypt text using RSA encryption.
 
 ### Initialize
 
-```
+```java
 Cryptore getCryptore(Context context, String alias) throws Exception {
     Cryptore.Builder builder = new Cryptore.Builder(alias, CipherAlgorithm.RSA);
     builder.setContext(context); //Need Only RSA on below API Lv22.
@@ -41,7 +41,7 @@ Cryptore getCryptore(Context context, String alias) throws Exception {
 ```
 
 ### Encrypt
-```
+```java
 String encrypt(String plainStr) throws Exception {         
     byte[] plainByte = plainStr.getBytes();         
     EncryptResult result = getCryptoreRSA().encrypt(plainByte);
@@ -50,7 +50,7 @@ String encrypt(String plainStr) throws Exception {
 ```
 
 ### Decrypt
-```
+```java
 String decrypt(String encryptedStr) throws Exception {
     byte[] encryptedByte = Base64.decode(encryptedStr, Base64.DEFAULT);
     DecryptResult result = getCryptoreRSA().decrypt(encryptedByte);
