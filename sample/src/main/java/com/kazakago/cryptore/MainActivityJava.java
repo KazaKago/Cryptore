@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivityJava extends AppCompatActivity {
 
     private static final String ALIAS_RSA = "CIPHER_RSA";
     private static final String ALIAS_AES = "CIPHER_AES";
@@ -80,10 +80,10 @@ public class MainActivity extends AppCompatActivity {
         return builder.build();
     }
 
-    private String encryptRSA(String originalStr) {
+    private String encryptRSA(String plainStr) {
         try {
-            Cryptore cryptore = getCryptoreRSA();
-            EncryptResult result = cryptore.encrypt(Base64.decode(originalStr, Base64.DEFAULT));
+            byte[] plainByte = plainStr.getBytes();
+            EncryptResult result = getCryptoreRSA().encrypt(plainByte);
             return Base64.encodeToString(result.getBytes(), Base64.DEFAULT);
         } catch (Exception e) {
             e.printStackTrace();
@@ -94,9 +94,9 @@ public class MainActivity extends AppCompatActivity {
 
     private String decryptRSA(String encryptedStr) {
         try {
-            Cryptore cryptore = getCryptoreRSA();
-            DecryptResult result = cryptore.decrypt(Base64.decode(encryptedStr, Base64.DEFAULT));
-            return Base64.encodeToString(result.getBytes(), Base64.DEFAULT);
+            byte[] encryptedByte = Base64.decode(encryptedStr, Base64.DEFAULT);
+            DecryptResult result = getCryptoreRSA().decrypt(encryptedByte);
+            return new String(result.getBytes());
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
@@ -104,11 +104,12 @@ public class MainActivity extends AppCompatActivity {
         return "";
     }
 
-    private String encryptAES(String originalStr) {
+    private String encryptAES(String plainStr) {
         try {
-            Cryptore cryptore = getCryptoreRSA();
-            EncryptResult result = cryptore.encrypt(Base64.decode(originalStr, Base64.DEFAULT));
+            byte[] plainByte = plainStr.getBytes();
+            EncryptResult result = getCryptoreAES().encrypt(plainByte);
             saveCipherIV(result.getCipherIV());
+            return Base64.encodeToString(result.getBytes(), Base64.DEFAULT);
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
@@ -118,10 +119,10 @@ public class MainActivity extends AppCompatActivity {
 
     private String decryptAES(String encryptedStr) {
         try {
-            Cryptore cryptore = getCryptoreRSA();
+            byte[] encryptedByte = Base64.decode(encryptedStr, Base64.DEFAULT);
             byte[] cipherIV = loadCipherIV();
-            DecryptResult result = cryptore.decrypt(Base64.decode(encryptedStr, Base64.DEFAULT), cipherIV);
-            return Base64.encodeToString(result.getBytes(), Base64.DEFAULT);
+            DecryptResult result = getCryptoreAES().decrypt(encryptedByte, cipherIV);
+            return new String(result.getBytes());
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();

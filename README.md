@@ -5,7 +5,7 @@ Cryptore
 [![Bitrise](https://www.bitrise.io/app/436ed4113cb15072.svg?token=5I58EK088C0wp3UWmf75qA&branch=master)]()
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE.md)
 
-This library performs encryption and decryption byte array using the [Android KeyStore System.](https://developer.android.com/training/articles/keystore.html)
+This library performs encryption and decryption byte array using [Android KeyStore System.](https://developer.android.com/training/articles/keystore.html)
 
 ## Requirement
 
@@ -21,26 +21,46 @@ This is due to Android OS hardware restrictions. [More details.](https://develop
 Add the following gradle dependency exchanging x.x.x for the latest release.
 
 ```
-compile 'com.kazakago.cryptore:cryptore:x.x.x'
+compile 'com.kazakago:cryptore:x.x.x'
 ```
 
 ## Usage
 
-The following is a sample to encrypt and decrypt using RSA encryption.
+The following is a sample to encrypt and decrypt text using RSA encryption.
+
+### Initialize
+
+```
+Cryptore getCryptore(Context context, String alias) throws Exception {
+    Cryptore.Builder builder = new Cryptore.Builder(alias, CipherAlgorithm.RSA);
+    builder.setContext(context); //Need Only RSA on below API Lv22.
+//    builder.setBlockMode(BlockMode.ECB); //If Needed.
+//    builder.setEncryptionPadding(EncryptionPadding.RSA_PKCS1); //If Needed.
+    return builder.build();
+}
+```
 
 ### Encrypt
 ```
-
+String encrypt(String plainStr) throws Exception {         
+    byte[] plainByte = plainStr.getBytes();         
+    EncryptResult result = getCryptoreRSA().encrypt(plainByte);
+    return Base64.encodeToString(result.getBytes(), Base64.DEFAULT);
+}
 ```
 
 ### Decrypt
 ```
-
+String decrypt(String encryptedStr) throws Exception {
+    byte[] encryptedByte = Base64.decode(encryptedStr, Base64.DEFAULT);
+    DecryptResult result = getCryptoreRSA().decrypt(encryptedByte);
+    return new String(result.getBytes());
+}
 ```
 
 Refer to the [sample module](https://github.com/KazaKago/Cryptore/tree/master/sample) for details.
 
-For other encryption options supported by Android, please see [here](https://developer.android.com/training/articles/keystore.html#SupportedAlgorithms).
+For other encryption options supported by Android, please see [here.](https://developer.android.com/training/articles/keystore.html#SupportedAlgorithms)
 
 ## License
 MIT License

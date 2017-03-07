@@ -48,7 +48,8 @@ interface Cryptore {
     @Throws(UnrecoverableKeyException::class, NoSuchAlgorithmException::class, KeyStoreException::class, InvalidAlgorithmParameterException::class, InvalidKeyException::class, IOException::class)
     fun decrypt(encryptedByte: ByteArray, cipherIV: ByteArray?): DecryptResult
 
-    class Builder(var alias: String, var type: CipherAlgorithm = Cryptore.Builder.CIPHER_ALGORITHM_DEFAULT) {
+    class Builder(var alias: String,
+                  var type: CipherAlgorithm = Cryptore.Builder.CIPHER_ALGORITHM_DEFAULT) {
 
         companion object {
             private val CIPHER_ALGORITHM_DEFAULT = CipherAlgorithm.RSA
@@ -72,7 +73,6 @@ interface Cryptore {
                     blockMode = BLOCK_MODE_DEFAULT__AES
                     encryptionPadding = ENCRYPTION_PADDING_DEFAULT__AES
                 }
-                else -> throw IllegalArgumentException("Unsupported Algorithm.")
             }
         }
 
