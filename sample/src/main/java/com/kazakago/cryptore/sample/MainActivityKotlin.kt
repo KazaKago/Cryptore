@@ -9,7 +9,6 @@ import android.widget.Button
 import android.widget.Toast
 import com.kazakago.cryptore.CipherAlgorithm
 import com.kazakago.cryptore.Cryptore
-import com.kazakago.cryptore.R
 
 class MainActivityKotlin : AppCompatActivity() {
 
@@ -18,7 +17,7 @@ class MainActivityKotlin : AppCompatActivity() {
         private val ALIAS_AES = "CIPHER_AES"
     }
 
-    private val originalInput by lazy { (findViewById(R.id.input_original) as TextInputLayout) }
+    private val originalInput by lazy { findViewById(R.id.input_original) as TextInputLayout }
     private val encryptedInput by lazy { findViewById(R.id.input_encrypted) as TextInputLayout }
     private val decryptedInput by lazy { findViewById(R.id.input_decrypted) as TextInputLayout }
     private val cryptoreRSA: Cryptore by lazy {

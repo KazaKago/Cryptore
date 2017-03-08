@@ -16,7 +16,7 @@ import javax.security.auth.x500.X500Principal
 /**
  * RSA Cryptore.
  *
- * Created by tamura_k on 2016/04/22.
+ * Created by KazaKago on 2016/04/22.
  */
 @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 class RSACryptore(

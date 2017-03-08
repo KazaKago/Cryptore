@@ -13,7 +13,7 @@ import javax.crypto.NoSuchPaddingException
 /**
  * RSA Cryptore for above Android M.
  *
- * Created by tamura_k on 2016/04/22.
+ * Created by KazaKago on 2016/04/22.
  */
 @TargetApi(Build.VERSION_CODES.M)
 class RSACryptoreM(

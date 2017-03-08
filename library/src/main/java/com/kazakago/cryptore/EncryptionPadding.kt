@@ -3,7 +3,7 @@ package com.kazakago.cryptore
 /**
  * Encryption Padding, copied from Android Framework API Level 23.
  *
- * Created by tamura_k on 2016/05/25.
+ * Created by KazaKago on 2016/05/25.
  */
 enum class EncryptionPadding(val rawValue: String) {
 

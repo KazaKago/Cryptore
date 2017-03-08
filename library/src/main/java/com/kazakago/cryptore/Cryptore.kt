@@ -13,7 +13,7 @@ import javax.crypto.NoSuchPaddingException
 /**
  * Cryptore Interface.
  *
- * Created by tamura_k on 2016/05/09.
+ * Created by KazaKago on 2016/05/09.
  */
 interface Cryptore {
 

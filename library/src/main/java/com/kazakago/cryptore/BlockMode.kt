@@ -3,7 +3,7 @@ package com.kazakago.cryptore
 /**
  * Block Mode, copied from Android Framework API Level 23.
  *
- * Created by tamura_k on 2016/05/25.
+ * Created by KazaKago on 2016/05/25.
  */
 enum class BlockMode(val rawValue: String) {
 

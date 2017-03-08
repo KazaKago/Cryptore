@@ -14,7 +14,6 @@ import com.kazakago.cryptore.CipherAlgorithm;
 import com.kazakago.cryptore.Cryptore;
 import com.kazakago.cryptore.DecryptResult;
 import com.kazakago.cryptore.EncryptResult;
-import com.kazakago.cryptore.R;
 
 public class MainActivityJava extends AppCompatActivity {
 

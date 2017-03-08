@@ -10,7 +10,7 @@ import javax.crypto.spec.IvParameterSpec
 /**
  * Base Cryptore class.
  *
- * Created by tamura_k on 2017/01/20.
+ * Created by KazaKago on 2017/01/20.
  */
 abstract class BaseCryptore(
         private val alias: String,
