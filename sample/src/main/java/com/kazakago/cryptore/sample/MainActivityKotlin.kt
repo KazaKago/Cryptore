@@ -1,4 +1,4 @@
-package com.kazakago.cryptore
+package com.kazakago.cryptore.sample
 
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Base64
 import android.widget.Button
 import android.widget.Toast
+import com.kazakago.cryptore.CipherAlgorithm
+import com.kazakago.cryptore.Cryptore
+import com.kazakago.cryptore.R
 
 class MainActivityKotlin : AppCompatActivity() {
 

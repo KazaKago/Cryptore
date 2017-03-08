@@ -1,4 +1,4 @@
-package com.kazakago.cryptore;
+package com.kazakago.cryptore.sample;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.kazakago.test", appContext.getPackageName());
+        assertEquals("com.kazakago.cryptore.sample.test", appContext.getPackageName());
     }
 }

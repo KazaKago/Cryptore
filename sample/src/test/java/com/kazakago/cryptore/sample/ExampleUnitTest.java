@@ -1,4 +1,4 @@
-package com.kazakago.cryptore;
+package com.kazakago.cryptore.sample;
 
 import org.junit.Test;
 

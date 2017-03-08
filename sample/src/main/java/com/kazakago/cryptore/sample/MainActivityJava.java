@@ -1,4 +1,4 @@
-package com.kazakago.cryptore;
+package com.kazakago.cryptore.sample;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,6 +9,12 @@ import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.kazakago.cryptore.CipherAlgorithm;
+import com.kazakago.cryptore.Cryptore;
+import com.kazakago.cryptore.DecryptResult;
+import com.kazakago.cryptore.EncryptResult;
+import com.kazakago.cryptore.R;
 
 public class MainActivityJava extends AppCompatActivity {
 
