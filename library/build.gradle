@@ -25,7 +25,7 @@ android {
 }
 
 publish {
-    userOrg = 'KazaKago'
+    userOrg = 'kazakago'
     groupId = 'com.kazakago.cryptore'
     artifactId = 'cryptore'
     publishVersion = VERSION_NAME
