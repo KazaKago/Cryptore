@@ -1,7 +1,7 @@
 Cryptore
 ====
 
-[![Bintray](https://img.shields.io/bintray/v/asciidoctor/maven/asciidoctorj.svg)]()
+[![Bintray](https://img.shields.io/bintray/v/kazakago/maven/cryptore.svg)](https://bintray.com/kazakago/maven/cryptore)
 [![Bitrise](https://www.bitrise.io/app/436ed4113cb15072.svg?token=5I58EK088C0wp3UWmf75qA&branch=master)]()
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE.md)
 
