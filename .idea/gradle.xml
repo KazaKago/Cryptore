@@ -9,7 +9,8 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/library" />
-            <option value="$PROJECT_DIR$/sample" />
+            <option value="$PROJECT_DIR$/samplejava" />
+            <option value="$PROJECT_DIR$/samplekotlin" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
