@@ -58,7 +58,7 @@ String decrypt(String encryptedStr) throws Exception {
 }
 ```
 
-Refer to the [sample module](https://github.com/KazaKago/Cryptore/tree/master/sample) for details.
+Refer to the sample module ([Java](https://github.com/KazaKago/Cryptore/tree/master/samplejava) & [Kotlin](https://github.com/KazaKago/Cryptore/tree/master/samplekotlin)) for details.
 
 For other encryption options supported by Android, please see [here.](https://developer.android.com/training/articles/keystore.html#SupportedAlgorithms)
 
