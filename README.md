@@ -44,7 +44,7 @@ Cryptore getCryptore(Context context, String alias) throws Exception {
 ```java
 String encrypt(String plainStr) throws Exception {         
     byte[] plainByte = plainStr.getBytes();         
-    EncryptResult result = getCryptoreRSA().encrypt(plainByte);
+    EncryptResult result = getCryptore().encrypt(plainByte);
     return Base64.encodeToString(result.getBytes(), Base64.DEFAULT);
 }
 ```
@@ -53,7 +53,7 @@ String encrypt(String plainStr) throws Exception {
 ```java
 String decrypt(String encryptedStr) throws Exception {
     byte[] encryptedByte = Base64.decode(encryptedStr, Base64.DEFAULT);
-    DecryptResult result = getCryptoreRSA().decrypt(encryptedByte);
+    DecryptResult result = getCryptore().decrypt(encryptedByte);
     return new String(result.getBytes());
 }
 ```
