@@ -21,7 +21,7 @@ This is due to Android OS hardware restrictions. [More details.](https://develop
 Add the following gradle dependency exchanging x.x.x for the latest release.
 
 ```groovy
-compile 'com.kazakago:cryptore:x.x.x'
+compile 'com.kazakago.cryptore:cryptore:x.x.x'
 ```
 
 ## Usage
