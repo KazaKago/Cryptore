@@ -12,7 +12,7 @@ This library performs encryption and decryption byte array using [Android KeySto
 - RSA encryption
     - Android 4.3 (API 18) or later
 - AES encryption
-    - Android 6.0 (API 23) or later
+    - Android 6.0 (API 23) or later
 
 This is due to Android OS hardware restrictions. [More details.](https://developer.android.com/training/articles/keystore.html#SupportedAlgorithms)
 
