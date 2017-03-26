@@ -53,7 +53,7 @@ String encrypt(String plainStr) throws Exception {
 ```java
 String decrypt(String encryptedStr) throws Exception {
     byte[] encryptedByte = Base64.decode(encryptedStr, Base64.DEFAULT);
-    DecryptResult result = getCryptore().decrypt(encryptedByte);
+    DecryptResult result = getCryptore().decrypt(encryptedByte, null);
     return new String(result.getBytes());
 }
 ```
