@@ -2,12 +2,10 @@ package com.kazakago.cryptore
 
 import android.content.Context
 import android.os.Build
-
+import android.util.Log
 import java.io.IOException
 import java.security.*
 import java.security.cert.CertificateException
-import javax.crypto.Cipher
-
 import javax.crypto.NoSuchPaddingException
 
 /**
@@ -70,14 +68,15 @@ interface Cryptore {
         fun build(): Cryptore {
             when (type) {
                 CipherAlgorithm.AES -> {
-                    if (Build.VERSION_CODES.M <= Build.VERSION.SDK_INT) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         return AESCryptore(alias = alias, blockMode = blockMode, encryptionPadding = encryptionPadding)
                     } else {
                         throw NoSuchAlgorithmException("AES is support only above API Lv23.")
                     }
                 }
                 CipherAlgorithm.RSA -> {
-                    if (Build.VERSION_CODES.M <= Build.VERSION.SDK_INT) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        context?.let { Log.i("Cryptore", "No Need \"Context\" for RSA on above API Lv23") }
                         return RSACryptoreM(alias = alias, blockMode = blockMode, encryptionPadding = encryptionPadding)
                     } else if (Build.VERSION_CODES.JELLY_BEAN_MR2 <= Build.VERSION.SDK_INT) {
                         context?.let {
