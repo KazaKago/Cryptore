@@ -17,23 +17,27 @@ import com.kazakago.cryptore.EncryptResult;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String ALIAS_RSA = "CIPHER_RSA";
-    private static final String ALIAS_AES = "CIPHER_AES";
+    private enum Alias {
+        RSA("CIPHER_RSA"),
+        AES("CIPHER_AES");
 
-    private TextInputLayout originalInput;
-    private TextInputLayout encryptedInput;
-    private TextInputLayout decryptedInput;
+        String value;
+
+        Alias(String value) {
+            this.value = value;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        originalInput = (TextInputLayout) findViewById(R.id.input_original);
-        encryptedInput = (TextInputLayout) findViewById(R.id.input_encrypted);
-        decryptedInput = (TextInputLayout) findViewById(R.id.input_decrypted);
+        final TextInputLayout originalInput = findViewById(R.id.input_original);
+        final TextInputLayout encryptedInput = findViewById(R.id.input_encrypted);
+        final TextInputLayout decryptedInput = findViewById(R.id.input_decrypted);
 
-        Button encryptRSAButton = (Button) findViewById(R.id.button_encrypt_rsa);
+        Button encryptRSAButton = findViewById(R.id.button_encrypt_rsa);
         encryptRSAButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button encryptAESButton = (Button) findViewById(R.id.button_encrypt_aes);
+        Button encryptAESButton = findViewById(R.id.button_encrypt_aes);
         encryptAESButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button decryptRSAButton = (Button) findViewById(R.id.button_decrypt_rsa);
+        Button decryptRSAButton = findViewById(R.id.button_decrypt_rsa);
         decryptRSAButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button decryptAESButton = (Button) findViewById(R.id.button_decrypt_aes);
+        Button decryptAESButton = findViewById(R.id.button_decrypt_aes);
         decryptAESButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Cryptore getCryptoreRSA() throws Exception {
-        Cryptore.Builder builder = new Cryptore.Builder(ALIAS_RSA, CipherAlgorithm.RSA);
+        Cryptore.Builder builder = new Cryptore.Builder(Alias.RSA.value, CipherAlgorithm.RSA);
         builder.setContext(this); //Need Only RSA on below API Lv22.
 //        builder.setBlockMode(BlockMode.ECB); //If Needed.
 //        builder.setEncryptionPadding(EncryptionPadding.RSA_PKCS1); //If Needed.
@@ -79,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private Cryptore getCryptoreAES() throws Exception {
-        Cryptore.Builder builder = new Cryptore.Builder(ALIAS_AES, CipherAlgorithm.AES);
+        Cryptore.Builder builder = new Cryptore.Builder(Alias.AES.value, CipherAlgorithm.AES);
 //        builder.setBlockMode(BlockMode.CBC); //If Needed.
 //        builder.setEncryptionPadding(EncryptionPadding.PKCS7); //If Needed.
         return builder.build();
