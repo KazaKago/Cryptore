@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.novoda.bintray-release'
 
 def VERSION_CODE = 4
-def VERSION_NAME = "1.2.0-SNAPSHOT"
+def VERSION_NAME = "1.2.0"
 
 android {
     compileSdkVersion 26
