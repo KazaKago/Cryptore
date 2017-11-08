@@ -22,7 +22,8 @@ class RSACryptoreM(
         encryptionPadding: EncryptionPadding) : BaseCryptore(
         alias = alias,
         blockMode = blockMode,
-        encryptionPadding = encryptionPadding) {
+        encryptionPadding = encryptionPadding,
+        context = null) {
 
     @Throws(KeyStoreException::class, CertificateException::class, NoSuchAlgorithmException::class, IOException::class, NoSuchProviderException::class, InvalidAlgorithmParameterException::class)
     override fun createKeyStore(): KeyStore {

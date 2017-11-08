@@ -1,5 +1,6 @@
 package com.kazakago.cryptore
 
+import android.content.Context
 import java.io.IOException
 import java.security.*
 import java.security.cert.CertificateException
@@ -15,7 +16,8 @@ import javax.crypto.spec.IvParameterSpec
 abstract class BaseCryptore(
         private val alias: String,
         blockMode: BlockMode,
-        encryptionPadding: EncryptionPadding) : Cryptore {
+        encryptionPadding: EncryptionPadding,
+        val context: Context?) : Cryptore {
 
     private val cipher: Cipher
     private val keyStore: KeyStore

@@ -23,10 +23,11 @@ class RSACryptore(
         alias: String,
         blockMode: BlockMode,
         encryptionPadding: EncryptionPadding,
-        private val context: Context) : BaseCryptore(
+        context: Context) : BaseCryptore(
         alias = alias,
         blockMode = blockMode,
-        encryptionPadding = encryptionPadding) {
+        encryptionPadding = encryptionPadding,
+        context = context) {
 
     @Throws(KeyStoreException::class, CertificateException::class, NoSuchAlgorithmException::class, IOException::class, NoSuchProviderException::class, InvalidAlgorithmParameterException::class)
     override fun createKeyStore(): KeyStore {
@@ -54,7 +55,7 @@ class RSACryptore(
         val end = Calendar.getInstance()
         end.add(Calendar.YEAR, 100)
         val generator = KeyPairGenerator.getInstance(CipherAlgorithm.RSA.rawValue, "AndroidKeyStore")
-        generator.initialize(KeyPairGeneratorSpec.Builder(context)
+        generator.initialize(KeyPairGeneratorSpec.Builder(this.context)
                 .setAlias(alias)
                 .setSubject(X500Principal("CN=Cryptore"))
                 .setSerialNumber(BigInteger.ONE)
