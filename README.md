@@ -1,9 +1,9 @@
 Cryptore
 ====
 
-[![Bintray](https://img.shields.io/bintray/v/kazakago/maven/cryptore.svg)](https://bintray.com/kazakago/maven/cryptore)
-[![Bitrise](https://www.bitrise.io/app/436ed4113cb15072.svg?token=5I58EK088C0wp3UWmf75qA&branch=master)]()
-[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE.md)
+[![Download](https://api.bintray.com/packages/kazakago/maven/cryptore/images/download.svg)](https://bintray.com/kazakago/maven/cryptore/_latestVersion)
+[![Build Status](https://www.bitrise.io/app/436ed4113cb15072/status.svg?token=5I58EK088C0wp3UWmf75qA)](https://www.bitrise.io/app/436ed4113cb15072)
+[![license](https://img.shields.io/github/license/kazakago/cryptore.svg)](LICENSE.md)
 
 This library performs encryption and decryption byte array using [Android KeyStore System.](https://developer.android.com/training/articles/keystore.html)
 
@@ -12,7 +12,7 @@ This library performs encryption and decryption byte array using [Android KeySto
 - RSA encryption
     - Android 4.3 (API 18) or later
 - AES encryption
-    - Android 6,0 (API 23) or later
+    - Android 6.0 (API 23) or later
 
 This is due to Android OS hardware restrictions. [More details.](https://developer.android.com/training/articles/keystore.html#SupportedAlgorithms)
 
@@ -21,7 +21,7 @@ This is due to Android OS hardware restrictions. [More details.](https://develop
 Add the following gradle dependency exchanging x.x.x for the latest release.
 
 ```groovy
-compile 'com.kazakago:cryptore:x.x.x'
+implementation 'com.kazakago.cryptore:cryptore:x.x.x'
 ```
 
 ## Usage
@@ -44,7 +44,7 @@ Cryptore getCryptore(Context context, String alias) throws Exception {
 ```java
 String encrypt(String plainStr) throws Exception {         
     byte[] plainByte = plainStr.getBytes();         
-    EncryptResult result = getCryptoreRSA().encrypt(plainByte);
+    EncryptResult result = getCryptore().encrypt(plainByte);
     return Base64.encodeToString(result.getBytes(), Base64.DEFAULT);
 }
 ```
@@ -53,7 +53,7 @@ String encrypt(String plainStr) throws Exception {
 ```java
 String decrypt(String encryptedStr) throws Exception {
     byte[] encryptedByte = Base64.decode(encryptedStr, Base64.DEFAULT);
-    DecryptResult result = getCryptoreRSA().decrypt(encryptedByte);
+    DecryptResult result = getCryptore().decrypt(encryptedByte, null);
     return new String(result.getBytes());
 }
 ```
