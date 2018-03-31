@@ -36,6 +36,14 @@ interface Cryptore {
     @Throws(UnrecoverableKeyException::class, NoSuchAlgorithmException::class, KeyStoreException::class, InvalidAlgorithmParameterException::class, InvalidKeyException::class, IOException::class)
     fun decrypt(encryptedByte: ByteArray, cipherIV: ByteArray? = null): DecryptResult
 
+    /**
+     * Resets the keystore state for the given alias
+     * *
+     * @return true if reset success, false if reset not attempted, throws if there is an error
+     */
+    @Throws(KeyStoreException::class)
+    fun reset() : Boolean
+
     class Builder(var alias: String,
                   var type: CipherAlgorithm = Cryptore.Builder.CIPHER_ALGORITHM_DEFAULT) {
 
