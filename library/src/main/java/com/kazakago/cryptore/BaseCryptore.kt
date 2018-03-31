@@ -47,6 +47,14 @@ abstract class BaseCryptore(
         return DecryptResult(cipher.doFinal(encryptedByte), cipher.iv)
     }
 
+    override fun reset(): Boolean {
+        val hasAlias = keyStore.containsAlias(alias)
+        if (hasAlias) {
+            keyStore.deleteEntry(alias)
+        }
+        return hasAlias
+    }
+
     /**
      * Initialize KeyStore.
      */
