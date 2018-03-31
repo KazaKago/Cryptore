@@ -53,6 +53,7 @@ abstract class BaseCryptore(
         return DecryptResult(cipher.doFinal(encryptedByte), cipher.iv)
     }
 
+    @Throws(KeyStoreException::class)
     override fun reset(): Boolean {
         val hasAlias = keyStore.containsAlias(alias)
         if (hasAlias) {
