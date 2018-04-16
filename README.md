@@ -1,3 +1,5 @@
+![./artwork/logo.png](./artwork/logo.png)
+
 Cryptore
 ====
 
