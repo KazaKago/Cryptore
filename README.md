@@ -64,6 +64,15 @@ Refer to the sample module ([Java](https://github.com/KazaKago/Cryptore/tree/mas
 
 For other encryption options supported by Android, please see [here.](https://developer.android.com/training/articles/keystore.html#SupportedAlgorithms)
 
+## Default encryption mode
+
+- RSA encryption
+    - BlockMode : ECB
+    - Padding : PKCS1Padding
+- AES encryption
+    - BlockMode : CBC
+    - Padding : PKCS7Padding
+
 ## License
 MIT License
 
