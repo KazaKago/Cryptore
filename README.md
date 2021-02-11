@@ -5,7 +5,6 @@ Cryptore
 
 [![Download](https://api.bintray.com/packages/kazakago/maven/cryptore/images/download.svg)](https://bintray.com/kazakago/maven/cryptore/_latestVersion)
 [![Test](https://github.com/KazaKago/cryptore/workflows/Test/badge.svg)](https://github.com/KazaKago/cryptore/actions?query=workflow%3ATest)
-[![Build Status](https://app.bitrise.io/app/887fbe147e6af538/status.svg?token=tx7VOEGqwcw9Bo5uLQGvpw&branch=master)](https://app.bitrise.io/app/887fbe147e6af538)
 [![license](https://img.shields.io/github/license/kazakago/cryptore.svg)](LICENSE.md)
 
 This library performs encryption and decryption byte array using [Android KeyStore System.](https://developer.android.com/training/articles/keystore.html)
