@@ -19,21 +19,6 @@ android {
     }
 }
 
-publish {
-    userOrg = 'kazakago'
-    groupId = 'com.kazakago.cryptore'
-    artifactId = 'cryptore'
-    publishVersion = android.defaultConfig.versionName
-    desc = 'Easy-to-use text encryption support library with "Android KeyStore System".'
-    website = 'https://github.com/KazaKago/Cryptore'
-    licences = ['MIT']
-}
-
-afterEvaluate {
-    //To avoid making javadoc generation fail.
-    tasks.findByPath(":library:releaseAndroidJavadocs").enabled = false
-}
-
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
