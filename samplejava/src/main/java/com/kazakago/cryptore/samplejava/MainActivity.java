@@ -3,13 +3,14 @@ package com.kazakago.cryptore.samplejava;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.textfield.TextInputLayout;
 import com.kazakago.cryptore.CipherAlgorithm;
 import com.kazakago.cryptore.Cryptore;
 import com.kazakago.cryptore.DecryptResult;
