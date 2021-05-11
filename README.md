@@ -4,7 +4,7 @@ Cryptore
 ====
 
 [![Download](https://api.bintray.com/packages/kazakago/maven/cryptore/images/download.svg)](https://bintray.com/kazakago/maven/cryptore/_latestVersion)
-[![Build Status](https://www.bitrise.io/app/436ed4113cb15072/status.svg?token=5I58EK088C0wp3UWmf75qA)](https://www.bitrise.io/app/436ed4113cb15072)
+[![Test](https://github.com/KazaKago/cryptore/workflows/Test/badge.svg)](https://github.com/KazaKago/cryptore/actions?query=workflow%3ATest)
 [![license](https://img.shields.io/github/license/kazakago/cryptore.svg)](LICENSE.md)
 
 This library performs encryption and decryption byte array using [Android KeyStore System.](https://developer.android.com/training/articles/keystore.html)
@@ -63,6 +63,15 @@ String decrypt(String encryptedStr) throws Exception {
 Refer to the sample module ([Java](https://github.com/KazaKago/Cryptore/tree/master/samplejava) & [Kotlin](https://github.com/KazaKago/Cryptore/tree/master/samplekotlin)) for details.
 
 For other encryption options supported by Android, please see [here.](https://developer.android.com/training/articles/keystore.html#SupportedAlgorithms)
+
+## Default encryption mode
+
+- RSA encryption
+    - BlockMode : ECB
+    - Padding : PKCS1Padding
+- AES encryption
+    - BlockMode : CBC
+    - Padding : PKCS7Padding
 
 ## License
 MIT License
