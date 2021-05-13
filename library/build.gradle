@@ -87,7 +87,7 @@ afterEvaluate {
             maven {
                 def releasesRepoUrl = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2")
                 def snapshotsRepoUrl = uri("https://s01.oss.sonatype.org/content/repositories/snapshots")
-                url = version.endsWith("-SNAPSHOT") ? snapshotsRepoUrl : releasesRepoUrl
+                url = android.defaultConfig.versionName.endsWith("-SNAPSHOT") ? snapshotsRepoUrl : releasesRepoUrl
                 credentials {
                     username = System.getenv("SONATYPE_USERNAME") ?: properties["sonatype.username"].toString()
                     password = System.getenv("SONATYPE_PASSWORD") ?: properties["sonatype.password"].toString()
