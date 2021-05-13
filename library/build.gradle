@@ -1,5 +1,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'org.jetbrains.dokka'
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
 
 android {
     compileSdkVersion 30
@@ -24,4 +27,72 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+}
+
+task sourcesJar(type: Jar) {
+    group = 'publishing'
+    archiveClassifier.set('sources')
+    from android.sourceSets.main.java.srcDirs
+}
+
+task javadocJar(type: Jar) {
+    group = 'publishing'
+    archiveClassifier.set('javadoc')
+    from tasks.dokkaHtml
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                from components.release
+                artifact tasks.sourcesJar
+                artifact tasks.javadocJar
+                groupId = 'com.kazakago.cryptore'
+                artifactId = 'cryptore'
+                version = android.defaultConfig.versionName
+                pom {
+                    name = "Cryptore"
+                    description = 'Easy-to-use text encryption support library with "Android KeyStore System".'
+                    url = 'https://github.com/KazaKago/Cryptore.kt'
+                    licenses {
+                        license {
+                            name = 'MIT License'
+                            url = 'https://opensource.org/licenses/MIT'
+                        }
+                    }
+                    scm {
+                        connection = 'git:git@github.com:KazaKago/Cryptore.kt'
+                        developerConnection = 'git:git@github.com:KazaKago/Cryptore.kt'
+                        url = 'https://github.com/KazaKago/Cryptore.kt'
+                    }
+                    developers {
+                        developer {
+                            name = 'KazaKago'
+                            email = 'kazakago@gmail.com'
+                            url = 'https://blog.kazakago.com/'
+                        }
+                    }
+                }
+                signing {
+                    def keyId = System.getenv("SIGNING_KEY_ID") ?: properties["signing.keyId"].toString()
+                    def secretKey = System.getenv("SIGNING_SECRET_KEY") ?: properties["signing.secretKey"].toString()
+                    def password = System.getenv("SIGNING_PASSWORD") ?: properties["signing.password"].toString()
+                    useInMemoryPgpKeys(keyId, secretKey, password)
+                    sign(publishing.publications.maven)
+                }
+            }
+        }
+        repositories {
+            maven {
+                def releasesRepoUrl = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2")
+                def snapshotsRepoUrl = uri("https://s01.oss.sonatype.org/content/repositories/snapshots")
+                url = version.endsWith("-SNAPSHOT") ? snapshotsRepoUrl : releasesRepoUrl
+                credentials {
+                    username = System.getenv("SONATYPE_USERNAME") ?: properties["sonatype.username"].toString()
+                    password = System.getenv("SONATYPE_PASSWORD") ?: properties["sonatype.password"].toString()
+                }
+            }
+        }
+    }
 }
