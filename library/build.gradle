@@ -52,7 +52,7 @@ afterEvaluate {
                 artifactId = 'cryptore'
                 version = android.defaultConfig.versionName
                 pom {
-                    name = "Cryptore"
+                    name = 'Cryptore'
                     description = 'Easy-to-use text encryption support library with "Android KeyStore System".'
                     url = 'https://github.com/KazaKago/Cryptore.kt'
                     licenses {
@@ -75,9 +75,9 @@ afterEvaluate {
                     }
                 }
                 signing {
-                    def keyId = System.getenv("SIGNING_KEY_ID") ?: properties["signing.keyId"].toString()
-                    def secretKey = System.getenv("SIGNING_SECRET_KEY") ?: properties["signing.secretKey"].toString()
-                    def password = System.getenv("SIGNING_PASSWORD") ?: properties["signing.password"].toString()
+                    def keyId = System.getenv('SIGNING_KEY_ID') ?: findProperty('signing.keyId').toString()
+                    def secretKey = System.getenv('SIGNING_SECRET_KEY') ?: findProperty('signing.secretKey').toString()
+                    def password = System.getenv('SIGNING_PASSWORD') ?: findProperty('signing.password').toString()
                     useInMemoryPgpKeys(keyId, secretKey, password)
                     sign(publishing.publications.maven)
                 }
@@ -85,12 +85,12 @@ afterEvaluate {
         }
         repositories {
             maven {
-                def releasesRepoUrl = uri("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2")
-                def snapshotsRepoUrl = uri("https://s01.oss.sonatype.org/content/repositories/snapshots")
+                def releasesRepoUrl = uri('https://s01.oss.sonatype.org/service/local/staging/deploy/maven2')
+                def snapshotsRepoUrl = uri('https://s01.oss.sonatype.org/content/repositories/snapshots')
                 url = android.defaultConfig.versionName.endsWith("-SNAPSHOT") ? snapshotsRepoUrl : releasesRepoUrl
                 credentials {
-                    username = System.getenv("SONATYPE_USERNAME") ?: properties["sonatype.username"].toString()
-                    password = System.getenv("SONATYPE_PASSWORD") ?: properties["sonatype.password"].toString()
+                    username = System.getenv('SONATYPE_USERNAME') ?: findProperty('sonatype.username').toString()
+                    password = System.getenv('SONATYPE_PASSWORD') ?: findProperty('sonatype.password').toString()
                 }
             }
         }
