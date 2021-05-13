@@ -3,7 +3,7 @@
 Cryptore
 ====
 
-[![Download](https://api.bintray.com/packages/kazakago/maven/cryptore/images/download.svg)](https://bintray.com/kazakago/maven/cryptore/_latestVersion)
+[![Maven Central](https://img.shields.io/maven-central/v/com.kazakago.cryptore/cryptore.svg)](https://search.maven.org/artifact/com.kazakago.cryptore/cryptore)
 [![Test](https://github.com/KazaKago/cryptore/workflows/Test/badge.svg)](https://github.com/KazaKago/cryptore/actions?query=workflow%3ATest)
 [![license](https://img.shields.io/github/license/kazakago/cryptore.svg)](LICENSE.md)
 
