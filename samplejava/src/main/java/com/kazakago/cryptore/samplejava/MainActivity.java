@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             return Base64.encodeToString(result.getBytes(), Base64.DEFAULT);
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
         }
         return "";
     }
@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
             return new String(result.getBytes());
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
         }
         return "";
     }
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
             return Base64.encodeToString(result.getBytes(), Base64.DEFAULT);
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
         }
         return "";
     }
@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
             return new String(result.getBytes());
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
         }
         return "";
     }

@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
             return Base64.encodeToString(result.bytes, Base64.DEFAULT)
         } catch (e: Exception) {
             e.printStackTrace()
-            Toast.makeText(this, e.localizedMessage, Toast.LENGTH_LONG).show()
+            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show()
         }
         return ""
     }
@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity() {
             return String(result.bytes)
         } catch (e: Exception) {
             e.printStackTrace()
-            Toast.makeText(this, e.localizedMessage, Toast.LENGTH_LONG).show()
+            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show()
         }
         return ""
     }
@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() {
             return Base64.encodeToString(result.bytes, Base64.DEFAULT)
         } catch (e: Exception) {
             e.printStackTrace()
-            Toast.makeText(this, e.localizedMessage, Toast.LENGTH_LONG).show()
+            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show()
         }
         return ""
     }
@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity() {
             return String(result.bytes)
         } catch (e: Exception) {
             e.printStackTrace()
-            Toast.makeText(this, e.localizedMessage, Toast.LENGTH_LONG).show()
+            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show()
         }
         return ""
     }
