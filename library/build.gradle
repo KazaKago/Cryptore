@@ -4,13 +4,13 @@ apply plugin: 'org.jetbrains.dokka'
 apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
+version = "1.4.0-SNAPSHOT"
+
 android {
     compileSdkVersion 30
     defaultConfig {
         minSdkVersion 18
         targetSdkVersion 30
-        versionCode 7
-        versionName "1.4.0-SNAPSHOT"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -53,9 +53,9 @@ afterEvaluate {
                 from components.release
                 artifact tasks.sourcesJar
                 artifact tasks.javadocJar
-                groupId = 'com.kazakago.cryptore'
-                artifactId = 'cryptore'
-                version = android.defaultConfig.versionName
+                it.groupId = 'com.kazakago.cryptore'
+                it.artifactId = 'cryptore'
+                it.version = version
                 pom {
                     name = 'Cryptore'
                     description = 'Easy-to-use text encryption support library with "Android KeyStore System".'
@@ -92,7 +92,7 @@ afterEvaluate {
             maven {
                 def releasesRepoUrl = uri('https://s01.oss.sonatype.org/service/local/staging/deploy/maven2')
                 def snapshotsRepoUrl = uri('https://s01.oss.sonatype.org/content/repositories/snapshots')
-                url = android.defaultConfig.versionName.endsWith("-SNAPSHOT") ? snapshotsRepoUrl : releasesRepoUrl
+                url = version.endsWith("-SNAPSHOT") ? snapshotsRepoUrl : releasesRepoUrl
                 credentials {
                     username = System.getenv('SONATYPE_USERNAME') ?: findProperty('sonatype.username').toString()
                     password = System.getenv('SONATYPE_PASSWORD') ?: findProperty('sonatype.password').toString()
