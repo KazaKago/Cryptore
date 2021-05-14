@@ -59,7 +59,7 @@ afterEvaluate {
                 pom {
                     name = 'Cryptore'
                     description = 'Easy-to-use text encryption support library with "Android KeyStore System".'
-                    url = 'https://github.com/KazaKago/Cryptore.kt'
+                    url = 'https://github.com/KazaKago/Cryptore'
                     licenses {
                         license {
                             name = 'MIT License'
@@ -67,9 +67,9 @@ afterEvaluate {
                         }
                     }
                     scm {
-                        connection = 'git:git@github.com:KazaKago/Cryptore.kt'
-                        developerConnection = 'git:git@github.com:KazaKago/Cryptore.kt'
-                        url = 'https://github.com/KazaKago/Cryptore.kt'
+                        connection = 'git:git@github.com:KazaKago/Cryptore'
+                        developerConnection = 'git:git@github.com:KazaKago/Cryptore'
+                        url = 'https://github.com/KazaKago/Cryptore'
                     }
                     developers {
                         developer {
