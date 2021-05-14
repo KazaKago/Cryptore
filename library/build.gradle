@@ -20,7 +20,9 @@ android {
         }
     }
     libraryVariants.all {
-        it.generateBuildConfig.enabled = false
+        generateBuildConfigProvider.configure {
+            enabled = false
+        }
     }
 }
 
