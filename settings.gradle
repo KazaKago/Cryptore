@@ -1,1 +1,4 @@
-include ':library', ':samplejava', ':samplekotlin'
+rootProject.name = "Cryptore"
+include ':library'
+include ':samplejava'
+include ':samplekotlin'

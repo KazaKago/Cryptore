@@ -3,7 +3,8 @@
 Cryptore
 ====
 
-[![Download](https://api.bintray.com/packages/kazakago/maven/cryptore/images/download.svg)](https://bintray.com/kazakago/maven/cryptore/_latestVersion)
+[![Maven Central](https://img.shields.io/maven-central/v/com.kazakago.cryptore/cryptore.svg)](https://search.maven.org/artifact/com.kazakago.cryptore/cryptore)
+[![javadoc](https://javadoc.io/badge2/com.kazakago.cryptore/cryptore/javadoc.svg)](https://javadoc.io/doc/com.kazakago.cryptore/cryptore)
 [![Test](https://github.com/KazaKago/cryptore/workflows/Test/badge.svg)](https://github.com/KazaKago/cryptore/actions?query=workflow%3ATest)
 [![license](https://img.shields.io/github/license/kazakago/cryptore.svg)](LICENSE.md)
 
@@ -60,7 +61,7 @@ String decrypt(String encryptedStr) throws Exception {
 }
 ```
 
-Refer to the sample module ([Java](https://github.com/KazaKago/Cryptore/tree/master/samplejava) & [Kotlin](https://github.com/KazaKago/Cryptore/tree/master/samplekotlin)) for details.
+Refer to the sample module ([Java](samplejava) & [Kotlin](samplekotlin)) for details.
 
 For other encryption options supported by Android, please see [here.](https://developer.android.com/training/articles/keystore.html#SupportedAlgorithms)
 

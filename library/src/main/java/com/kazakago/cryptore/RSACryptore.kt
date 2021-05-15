@@ -55,7 +55,7 @@ class RSACryptore(
         val end = Calendar.getInstance()
         end.add(Calendar.YEAR, 100)
         val generator = KeyPairGenerator.getInstance(CipherAlgorithm.RSA.rawValue, "AndroidKeyStore")
-        generator.initialize(KeyPairGeneratorSpec.Builder(this.context)
+        generator.initialize(KeyPairGeneratorSpec.Builder(this.context!!)
                 .setAlias(alias)
                 .setSubject(X500Principal("CN=Cryptore"))
                 .setSerialNumber(BigInteger.ONE)

@@ -11,12 +11,12 @@
     android:paddingTop="16dp"
     tools:context=".MainActivity">
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_original"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_original"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,33 +24,36 @@
             android:hint="Original Text"
             android:inputType="textEmailAddress"/>
 
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_encrypt_rsa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="encrypt RSA"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_encrypt_aes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:text="encrypt AES"/>
 
     </LinearLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_encrypted"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_encrypted"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -58,33 +61,36 @@
             android:hint="Encrypted Text"
             android:inputType="textEmailAddress"/>
 
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:orientation="horizontal">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_decrypt_rsa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="decrypt RSA"/>
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_decrypt_aes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:text="decrypt AES"/>
 
     </LinearLayout>
 
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_decrypted"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
 
-        <EditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_decrypted"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -92,6 +98,6 @@
             android:hint="Decrypted Text"
             android:inputType="textEmailAddress"/>
 
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
 </LinearLayout>

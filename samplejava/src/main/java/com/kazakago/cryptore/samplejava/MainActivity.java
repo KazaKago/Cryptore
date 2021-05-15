@@ -3,13 +3,14 @@ package com.kazakago.cryptore.samplejava;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.textfield.TextInputLayout;
 import com.kazakago.cryptore.CipherAlgorithm;
 import com.kazakago.cryptore.Cryptore;
 import com.kazakago.cryptore.DecryptResult;
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             return Base64.encodeToString(result.getBytes(), Base64.DEFAULT);
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
         }
         return "";
     }
@@ -108,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
             return new String(result.getBytes());
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
         }
         return "";
     }
@@ -121,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
             return Base64.encodeToString(result.getBytes(), Base64.DEFAULT);
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
         }
         return "";
     }
@@ -134,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
             return new String(result.getBytes());
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, e.toString(), Toast.LENGTH_LONG).show();
         }
         return "";
     }
